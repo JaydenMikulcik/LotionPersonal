@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import ContainerOutsideExample from "../components/header";
 import LeftSide from "../components/leftSide";
@@ -8,15 +8,23 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 function Mainpage() {
+  const [showLeft, setShowLeft] = useState(true);
+
+  const handleToggleLeft = () => {
+    setShowLeft((prevState) => !prevState);
+  };
+
   return (
-    <div className="container-fluid">
-      <ContainerOutsideExample />
-      <Container>
+    <div>
+      <ContainerOutsideExample toggleLeft={handleToggleLeft} />
+      <Container className="rightBorder">
         <Row>
+          {showLeft && (
+            <Col xs={3}>
+              <LeftSide />
+            </Col>
+          )}
           <Col>
-            <LeftSide />
-          </Col>
-          <Col xs={6}>
             <InputFields />
           </Col>
         </Row>

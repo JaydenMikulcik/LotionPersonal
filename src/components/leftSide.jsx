@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Table from "react-bootstrap/Table";
 import Cards from "./notecard";
+import "../styles/styles.css";
 
 function LeftSide() {
   const [data, setData] = useState([]);
@@ -14,9 +15,9 @@ function LeftSide() {
     }
   }, []);
   return (
-    <div>
-      <Table striped>
-        <thead>
+    <div className="tablePreviews">
+      <Table striped className="tablePreviews">
+        <thead className="topPart">
           <tr>
             <th>Notes</th>
             <th>+</th>
@@ -30,6 +31,7 @@ function LeftSide() {
                 title={item.Objtitle}
                 date="7"
                 description={item.Objbody}
+                id={item.ObjId}
               />
             );
           })}

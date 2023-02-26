@@ -1,0 +1,36 @@
+.boldTop {
+  justify-content: center;
+  color: red;
+  text-align: center;
+}
+
+.inputArea {
+  height: 9in;
+}
+
+.tablePreviews {
+  max-height: 10in;
+  overflow: scroll;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.rightBorder {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.tablePreviews tr,
+td {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.cardStyling {
+  width: 100%;
+}
+
+.topPart {
+  position: sticky;
+  top: 0;
+}
