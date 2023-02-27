@@ -6,7 +6,7 @@ import "../styles/styles.css";
 
 function ContainerOutsideExample(props) {
   return (
-    <Container>
+    <div>
       <Navbar expand="lg" variant="light" bg="light">
         <Container>
           <button onClick={props.toggleLeft}>
@@ -19,7 +19,7 @@ function ContainerOutsideExample(props) {
           <div></div>
         </Container>
       </Navbar>
-    </Container>
+    </div>
   );
 }
 

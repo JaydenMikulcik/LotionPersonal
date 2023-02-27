@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import ContainerOutsideExample from "../components/header";
 import LeftSide from "../components/leftSide";
 import InputFields from "../components/inputFields";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import "../styles/styles.css";
 
 function Mainpage() {
   const [showLeft, setShowLeft] = useState(true);
@@ -15,9 +15,9 @@ function Mainpage() {
   };
 
   return (
-    <div>
+    <div className="further">
       <ContainerOutsideExample toggleLeft={handleToggleLeft} />
-      <Container className="rightBorder">
+      <div className="rightBorder">
         <Row>
           {showLeft && (
             <Col xs={3}>
@@ -28,7 +28,7 @@ function Mainpage() {
             <InputFields />
           </Col>
         </Row>
-      </Container>
+      </div>
     </div>
   );
 }
