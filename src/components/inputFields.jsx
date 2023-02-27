@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -9,18 +10,22 @@ import "../styles/styles.css";
 function InputFields() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [edit, setEdit] = useState(true);
 
-  let changePage = () => {
-    console.log("here");
-    if (Number.isInteger(window.location.pathname.split("/")[-1])) {
-      let index = parseInt(window.location.pathname.split("/")[-1]);
+  let { id } = useParams();
+
+  const handleToggleEdit = () => {
+    setEdit((prevState) => !prevState);
+  };
+
+  React.useEffect(() => {
+    if (id) {
       let storedData = localStorage.getItem("entries");
       let parsedData = JSON.parse(storedData);
-      console.log(parsedData[index], index);
-      setTitle(parsedData[index].Objtitle);
-      setBody(parsedData[index].Objbody);
+      setTitle(parsedData[id].Objtitle);
+      setBody(parsedData[id].Objbody);
     }
-  };
+  }, [id]);
 
   let updateLocalStorage = () => {
     let entries = JSON.parse(localStorage.getItem("entries")) || [];
@@ -33,23 +38,48 @@ function InputFields() {
     setTitle(event.target.value);
   };
 
+  const getCurrentDate = () => {
+    let newDate = new Date();
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+
+    let hours = newDate.getHours();
+    let minutes = newDate.getMinutes();
+    let seconds = newDate.getSeconds();
+
+    return `${year}-${
+      month < 10 ? `0${month}` : `${month}`
+    }-${date}, ${hours}-${minutes}-${seconds}`;
+  };
+
   return (
     <div>
-      {changePage()}
       <div>
         <input type="text" name="name" onChange={onChangeTitle} value={title} />
         <ButtonGroup aria-label="Basic example">
-          <Button variant="secondary" onClick={updateLocalStorage}>
-            Save
-          </Button>
+          {edit ? (
+            <Button variant="secondary" onClick={handleToggleEdit}>
+              Edit
+            </Button>
+          ) : (
+            <Button variant="secondary" onClick={updateLocalStorage}>
+              Save
+            </Button>
+          )}
           <Button variant="secondary">Delete</Button>
         </ButtonGroup>
-        <ReactQuill
-          theme="snow"
-          value={body}
-          onChange={setBody}
-          className="inputArea"
-        />
+        {!edit && <div>{getCurrentDate()}</div>}
+        {edit ? (
+          <p>{body}</p>
+        ) : (
+          <ReactQuill
+            theme="snow"
+            value={body}
+            onChange={setBody}
+            className="inputArea"
+          />
+        )}
       </div>
     </div>
   );
