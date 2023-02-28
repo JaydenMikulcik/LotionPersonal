@@ -9,9 +9,14 @@ import "../styles/styles.css";
 
 function Mainpage() {
   const [showLeft, setShowLeft] = useState(true);
+  const [update, toggleUpdate] = useState(false);
 
   const handleToggleLeft = () => {
     setShowLeft((prevState) => !prevState);
+  };
+
+  const handleUpdate = () => {
+    toggleUpdate((prevState) => !prevState);
   };
 
   return (
@@ -21,11 +26,11 @@ function Mainpage() {
         <Row>
           {showLeft && (
             <Col xs={3} style={{ paddingRight: 0 }}>
-              <LeftSide />
+              <LeftSide doUpdate={handleUpdate} status={update} />
             </Col>
           )}
           <Col>
-            <InputFields />
+            <InputFields doUpdate={handleUpdate} />
           </Col>
         </Row>
       </div>

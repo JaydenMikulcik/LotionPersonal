@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Mainpage />}></Route>
         <Route path="/notes/:id/*" element={<Mainpage />}></Route>
+        <Route path="/notes/" element={<Mainpage />}></Route>
       </Routes>
     </BrowserRouter>
   );

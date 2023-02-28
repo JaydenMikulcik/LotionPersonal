@@ -7,17 +7,20 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../styles/styles.css";
 
-function InputFields() {
+function InputFields(props) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [date, setDate] = useState("");
   const [edit, setEdit] = useState(true);
+  const [currenturl, setcurrenturl] = useState(window.location.href);
 
   let { id } = useParams();
 
   const handleToggleEdit = () => {
     setEdit((prevState) => !prevState);
+    console.log(currenturl);
     getCurrentDate();
+    window.history.pushState(currenturl, currenturl, `${id}/edit`);
   };
 
   let indexIds = (array) => {
@@ -37,13 +40,19 @@ function InputFields() {
     }
   }, [id]);
 
+  React.useEffect(() => {
+    setcurrenturl(window.location.href);
+  });
+
   let updateLocalStorage = (remove) => {
+    window.history.replaceState(currenturl, currenturl, `${id}`);
     let entries = JSON.parse(localStorage.getItem("entries")) || [];
 
     if (remove) {
       entries.splice(id, 1);
       entries = indexIds(entries);
       localStorage.setItem("entries", JSON.stringify(entries));
+      props.doUpdate();
       return;
     }
     if (entries && id < entries.length) {
@@ -62,6 +71,7 @@ function InputFields() {
       });
     }
     localStorage.setItem("entries", JSON.stringify(entries));
+    props.doUpdate();
     console.log(entries);
   };
 
@@ -90,23 +100,27 @@ function InputFields() {
         <Row className="titleArea">
           <Col>
             <Row>
-              <input
-                type="text"
-                name="name"
-                onChange={onChangeTitle}
-                value={title}
-                className="inputStyle"
-              />
+              {currenturl.includes("edit") ? (
+                <input
+                  type="text"
+                  name="name"
+                  onChange={onChangeTitle}
+                  value={title}
+                  className="inputStyle"
+                />
+              ) : (
+                <div className="inputStyle">{title}</div>
+              )}
             </Row>
-            {!edit && <Row>{date}</Row>}
+            <Row>{date}</Row>
           </Col>
 
           <Col
             aria-label="Basic example"
-            className="buttonsStyle d-flex justify-content-end"
+            className=" d-flex justify-content-end"
           >
-            <div className="buttonsStyle d-flex justify-content-end">
-              {edit ? (
+            <div className=" d-flex justify-content-end">
+              {!currenturl.includes("edit") ? (
                 <button onClick={handleToggleEdit} className="buttonsStyle">
                   Edit
                 </button>
@@ -127,8 +141,11 @@ function InputFields() {
             </div>
           </Col>
         </Row>
-        {edit ? (
-          <div dangerouslySetInnerHTML={{ __html: body }} />
+        {!currenturl.includes("edit") ? (
+          <div
+            dangerouslySetInnerHTML={{ __html: body }}
+            style={{ fontSize: "130%" }}
+          />
         ) : (
           <div>
             <ReactQuill

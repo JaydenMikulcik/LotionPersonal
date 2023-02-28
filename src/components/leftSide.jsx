@@ -6,19 +6,29 @@ import Col from "react-bootstrap/Col";
 import Cards from "./notecard";
 import "../styles/styles.css";
 
-function LeftSide() {
+function LeftSide(props) {
   const [data, setData] = useState([]);
+  let [newId, setNewId] = useState("");
+  const [currenturl, setcurrenturl] = useState(window.location.href);
   let { id } = useParams();
+
+  React.useEffect(() => {
+    setcurrenturl(window.location.href);
+  });
 
   let addNewCard = () => {
     let entries = JSON.parse(localStorage.getItem("entries")) || [];
-    entries.push({ Objtitle: "", Objbody: "", ObjId: entries.length });
-    let addnewRoute = "/notes/" + (entries.length - 1);
+    entries.push({
+      Objtitle: "Untitled",
+      Objbody: "...",
+      ObjId: entries.length,
+    });
+    let id = entries.length;
 
     localStorage.setItem("entries", JSON.stringify(entries));
-    console.log(addnewRoute);
-
-    return addnewRoute;
+    props.doUpdate();
+    setNewId(entries.length);
+    window.history.replaceState(currenturl, currenturl, `${id}`);
   };
 
   useEffect(() => {
@@ -27,7 +37,7 @@ function LeftSide() {
       const parsedData = JSON.parse(storedData);
       setData(parsedData);
     }
-  }, []);
+  }, [props.status]);
   return (
     <div className="tablePreviews">
       <Row className="topPart">
@@ -35,9 +45,9 @@ function LeftSide() {
           <b>Notes</b>
         </Col>
         <Col>
-          <Link to={addNewCard}>
-            <div onClick={addNewCard}>
-              <b>+</b>
+          <Link>
+            <div onClick={addNewCard} className="d-flex justify-content-end">
+              <b className="buttonsStyle">+</b>
             </div>
           </Link>
         </Col>

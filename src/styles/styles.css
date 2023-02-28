@@ -6,8 +6,11 @@
 }
 
 .inputArea {
-  height: 7.5in;
-  padding-left: 0;
+  height: 4in;
+  transform: scale(1.5);
+  transform-origin: top left;
+  border-color: white;
+  width: 65%;
 }
 
 .tablePreviews {
@@ -68,6 +71,9 @@ td {
   border-style: hidden;
   padding-right: 30px;
   font-size: 120%;
+}
+.buttonsStyle:hover {
+  background-color: rgb(47, 8, 84);
 }
 
 .biggerT {
