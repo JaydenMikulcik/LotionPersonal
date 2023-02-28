@@ -20,7 +20,7 @@ function Mainpage() {
       <div className="rightBorder">
         <Row>
           {showLeft && (
-            <Col xs={3}>
+            <Col xs={3} style={{ paddingRight: 0 }}>
               <LeftSide />
             </Col>
           )}

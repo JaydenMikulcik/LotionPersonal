@@ -1,15 +1,17 @@
 .boldTop {
   justify-content: center;
-  color: red;
+  color: black;
   text-align: center;
+  font-size: 150%;
 }
 
 .inputArea {
-  height: 9in;
+  height: 7.5in;
+  padding-left: 0;
 }
 
 .tablePreviews {
-  max-height: 10in;
+  height: 8in;
   overflow: scroll;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -33,10 +35,51 @@ td {
 .topPart {
   position: sticky;
   top: 0;
-  background-color: black;
+  background-color: white;
   opacity: 1;
+  height: 60px;
+  font-size: 200%;
+  border-bottom: 1px solid grey;
 }
 
 .putLeft {
   align-items: left;
+}
+
+.activeCard {
+  background-color: rgb(47, 8, 84);
+  color: white;
+}
+
+.cardStyle {
+  height: 120px;
+  overflow: hidden;
+  border-bottom: 1px solid grey;
+}
+
+.titleArea {
+  border: 1px solid grey;
+  height: 100px;
+}
+
+.buttonsStyle {
+  background-color: white;
+  color: rgba(27, 23, 23, 0.734);
+  border-style: hidden;
+  padding-right: 30px;
+  font-size: 120%;
+}
+
+.biggerT {
+  transform: scale(2);
+}
+
+.inputStyle {
+  border-style: hidden;
+  height: 60px;
+  font-size: 200%;
+  border-color: white;
+}
+.inputStyle:focus {
+  outline: none;
 }

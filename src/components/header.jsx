@@ -7,14 +7,18 @@ import "../styles/styles.css";
 function ContainerOutsideExample(props) {
   return (
     <div>
-      <Navbar expand="lg" variant="light" bg="light">
+      <Navbar expand="lg" variant="light" bg="white">
         <Container>
-          <button onClick={props.toggleLeft}>
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <div className="d-flex justify-content-start">
+            <button onClick={props.toggleLeft} style={{ alignItems: "left" }}>
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          </div>
           <div>
-            <div className="boldTop">Lotion</div>
-            <div>Like notion, but worse.</div>
+            <div className="boldTop">
+              <h1>Lotion</h1>
+            </div>
+            <div style={{ color: "grey" }}>Like notion, but worse.</div>
           </div>
           <div></div>
         </Container>
