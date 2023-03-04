@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -28,7 +29,6 @@ function LeftSide(props) {
     localStorage.setItem("entries", JSON.stringify(entries));
     props.doUpdate();
     setNewId(entries.length);
-    window.history.replaceState(currenturl, currenturl, `${id}`);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function LeftSide(props) {
           <b>Notes</b>
         </Col>
         <Col>
-          <Link>
+          <Link to={`../notes/${data.length}/edit`}>
             <div onClick={addNewCard} className="d-flex justify-content-end">
               <b className="buttonsStyle">+</b>
             </div>

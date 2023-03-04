@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -35,7 +35,6 @@ function InputFields(props) {
     const newValue = event.target.value;
     formatDate(newValue);
     console.log(newValue);
-    // Do something with the new value...
   }
 
   const handleToggleEdit = () => {
@@ -59,15 +58,16 @@ function InputFields(props) {
       setTitle(parsedData[id].Objtitle);
       setBody(parsedData[id].Objbody);
       setDate(parsedData[id].Objdate);
+      if (!date) getCurrentDate();
     }
   }, [id]);
 
   React.useEffect(() => {
     setcurrenturl(window.location.href);
+    if (!date) getCurrentDate();
   });
 
   let updateLocalStorage = (remove) => {
-    window.history.replaceState(currenturl, currenturl, `${id}`);
     let entries = JSON.parse(localStorage.getItem("entries")) || [];
 
     if (remove) {
@@ -111,11 +111,12 @@ function InputFields(props) {
       hour: "2-digit",
       hour12: false,
     });
-    let minutes = newDate.toLocaleString("default", { minute: "2-digit" });
+    let minutes = newDate
+      .getMinutes()
+      .toLocaleString(undefined, { minimumIntegerDigits: 2 });
     let formatted = `${year}-${month}-${day}T${hours}:${minutes}`;
-    formatDate(formatted);
     console.log(formatted);
-    console.log(newDate.toLocaleDateString);
+    formatDate(formatted);
   };
 
   const confirmDelete = () => {
@@ -175,19 +176,29 @@ function InputFields(props) {
                     Edit
                   </button>
                 ) : (
-                  <button
-                    className="buttonsStyle"
-                    onClick={() => updateLocalStorage(false)}
-                  >
-                    Save
-                  </button>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Link to={`../notes/${id}`}>
+                      <button
+                        className="buttonsStyle"
+                        style={{ height: "98px" }}
+                        onClick={() => updateLocalStorage(false)}
+                      >
+                        Save
+                      </button>
+                    </Link>
+                  </div>
                 )}
-                <button
-                  className="buttonsStyle"
-                  onClick={() => confirmDelete()}
-                >
-                  Delete
-                </button>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Link to={`../notes/`}>
+                    <button
+                      className="buttonsStyle"
+                      style={{ height: "98px" }}
+                      onClick={() => confirmDelete()}
+                    >
+                      Delete
+                    </button>
+                  </Link>
+                </div>
               </div>
             </Col>
           </Row>
