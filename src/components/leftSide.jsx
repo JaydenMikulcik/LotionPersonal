@@ -53,22 +53,33 @@ function LeftSide(props) {
         </Col>
       </Row>
       <Row>
-        {data.map((item, key) => {
-          let active = false;
-          if (id == key) {
-            active = true;
-          }
-          return (
-            <Cards
-              key={key}
-              title={item.Objtitle}
-              date={item.Objdate}
-              description={item.Objbody}
-              id={item.ObjId}
-              isActive={active}
-            />
-          );
-        })}
+        {data.length > 0 ? (
+          data.map((item, key) => {
+            let active = false;
+            if (id == key) {
+              active = true;
+            }
+            return (
+              <Cards
+                key={key}
+                title={item.Objtitle}
+                date={item.Objdate}
+                description={item.Objbody}
+                id={item.ObjId}
+                isActive={active}
+              />
+            );
+          })
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: "140%",
+            }}
+          >
+            <b>No Notes Yet</b>
+          </div>
+        )}
       </Row>
     </div>
   );
